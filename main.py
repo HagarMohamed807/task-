@@ -172,7 +172,13 @@ def call_llm(messages: list[dict]) -> dict:
         }
 
     # ── The LLM returned a question ──
-    content = json.loads(choice.content)
+    # Gemini sometimes wraps the JSON in markdown code fences — strip them first
+    raw = (choice.content or "").strip()
+    if raw.startswith("```"):
+        # Remove opening fence (```json or ```) and closing fence (```)
+        raw = raw.split("\n", 1)[-1]           # drop first line (``` or ```json)
+        raw = raw.rsplit("```", 1)[0].strip()  # drop trailing ```
+    content = json.loads(raw)
     return {
         "type": "question",
         "data": {
