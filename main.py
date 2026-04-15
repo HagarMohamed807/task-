@@ -83,6 +83,7 @@ Return a JSON object like this — nothing else:
 }}
 
 After the 10th answer, call recommend_track instead of returning JSON.
+Latest Updates Dependencies Questions
 """
 
 # ── Tool Definition ────────────────────────────────────────────────────────
